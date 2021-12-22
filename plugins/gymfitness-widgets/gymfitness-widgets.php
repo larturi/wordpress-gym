@@ -42,7 +42,47 @@ class GymFitness_Clases_Widget extends WP_Widget {
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
-		echo esc_html__( 'Hello, World!', 'text_domain' );
+
+		$cantidad = $instance['cantidad'];
+        if($cantidad == ''){
+            $cantidad = 3;
+        }
+
+		?>
+		
+		<ul>
+			<?php
+				$args = array(
+					'post_type' => 'gymfitness_clases',
+					'posts_per_page' => $cantidad,
+					'orderby' => 'rand'
+				);
+				$clases = new WP_Query($args);
+				while($clases->have_posts()): $clases->the_post();
+			?>
+				<li class="clase-sidebar">
+					<div class="imagen">
+						<?php the_post_thumbnail('thumbnail') ?>
+					</div>
+					<div class="contenido-clase">
+						<a href="<?php the_permalink(); ?>">
+							<h3><?php the_title(); ?></h3>
+						</a>
+						<?php 
+							$hora_inicio = get_field('hora_inicio'); 
+							$hora_fin = get_field('hora_fin'); 
+						?>
+
+						<p>     
+							<?php the_field('dias_clase'); ?>  <?php echo $hora_inicio . ' a ' . $hora_fin ?>
+						</p>
+					</div>
+				</li>
+			<?php endwhile; wp_reset_postdata(); ?>
+		</ul>
+
+		<?php
+		
 		echo $args['after_widget'];
 	}
 
@@ -54,11 +94,18 @@ class GymFitness_Clases_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'New title', 'text_domain' );
-		?>
+        $cantidad = ! empty( $instance['cantidad'] ) ? $instance['cantidad'] : esc_html__( '¿Cuántas Clases deseas mostrar?', 'gymfitness' ); ?>
 		<p>
-		<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
-		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'cantidad' ) ); ?>">
+				<?php esc_attr_e( '¿Cuántas Clases deseas mostrar?', 'gymfitness' ); ?>
+			</label> 
+
+			<input 
+				class="widefat" 
+				id="<?php echo esc_attr( $this->get_field_id( 'cantidad' ) ); ?>" 
+				name="<?php echo esc_attr( $this->get_field_name( 'cantidad' ) ); ?>" 
+				type="number" 
+				value="<?php echo esc_attr( $cantidad ); ?>" >
 		</p>
 		<?php 
 	}
@@ -75,7 +122,7 @@ class GymFitness_Clases_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+		$instance['cantidad'] = ( ! empty( $new_instance['cantidad'] ) ) ? sanitize_text_field( $new_instance['cantidad'] ) : '';
 
 		return $instance;
 	}
