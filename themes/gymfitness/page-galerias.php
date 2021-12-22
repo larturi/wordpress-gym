@@ -10,6 +10,10 @@
                     $galeria = get_post_gallery(get_the_ID(), false);
                     $galeria_imagenes_ids = explode(',', $galeria['ids']);
                 ?>
+
+                <ul class="galeria-imagenes">
+                    
+                </ul>
             <?php endwhile; ?>
         </div>
     </main>
