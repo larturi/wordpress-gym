@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    $('.menu:first ul').slicknav({
+    $('.menu-principal .menu:first').slicknav({
         label: '',
         appendTo: '.site-header',
     });
