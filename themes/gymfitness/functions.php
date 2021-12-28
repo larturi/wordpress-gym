@@ -2,6 +2,7 @@
 
 // Consultas reutilizables
 require get_template_directory() . '/inc/queries.php';
+require get_template_directory() . '/inc/shortcodes.php';
 
 // Cuando el tema es activado
 function gymfitness_setup() {
@@ -10,7 +11,7 @@ function gymfitness_setup() {
     add_theme_support('post-thumbnails');
 
     // Titulos SEO
-    add_theme_support('title-tag');
+    add_theme_support('title-tag'); 
 
     //Imagenes de tamaño personalizado
     add_image_size('square', 350, 350, true);
@@ -42,7 +43,11 @@ function gymfitness_scripts_styles() {
     endif;
 
     wp_enqueue_script('slicknavJS', get_template_directory_uri() . '/js/jquery.slicknav.min.js', array('jquery'), '1.0.0', true);
-    wp_enqueue_script('lightboxJS', get_template_directory_uri() . '/js/lightbox.min.js', array('jquery'), '2.11.1', true);
+    
+    if (is_page('galeria')):
+        wp_enqueue_script('lightboxJS', get_template_directory_uri() . '/js/lightbox.min.js', array('jquery'), '2.11.1', true);
+    endif;
+    
     wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery', 'slicknavJS'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'gymfitness_scripts_styles');
