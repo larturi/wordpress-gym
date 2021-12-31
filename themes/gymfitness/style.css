@@ -850,14 +850,14 @@ div.wpcf7-mail-sent-ok{
 }
 /** Reescribir BXSlider **/
 .bx-wrapper{
-    background: transparent;
-    border: none;
-    box-shadow:none;
+    background: transparent !important;
+    border: none !important;
+    box-shadow:none !important;
 }
 .bx-wrapper .bx-pager.bx-default-pager a, 
 .bx-wrapper .bx-pager.bx-default-pager a:hover{
-    background: var(--blanco);
+    background: var(--blanco) !important;
 }
 .bx-wrapper .bx-pager.bx-default-pager a.active {
-    background: var(--colorPrimario);
+    background: var(--colorPrimario) !important;
 }

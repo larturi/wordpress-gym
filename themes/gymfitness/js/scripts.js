@@ -6,4 +6,11 @@ jQuery(document).ready(function($) {
         appendTo: '.site-header',
     });
 
+    // Slider
+    $('.listado-testimoniales').bxSlider({
+        auto: true,
+        mode: 'fade',
+        controls: false,
+    });
+
 });
